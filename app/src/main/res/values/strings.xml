@@ -3,4 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+<string name="preference_file_key">com.example.ActivityLifecyclePractice.preference_file_key</string>
+<string name="level_key">com.example.ActivityLifecyclePractice.level_key</string>
+<string name="best_user_key">com.example.ActivityLifecyclePractice.user</string>
+
 </resources>
