@@ -1,12 +1,18 @@
 package com.arc.me.activitylifecyclepratice;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+
+import java.net.URI;
 
 
 public class PracticeActivity extends ActionBarActivity {
@@ -15,6 +21,10 @@ public class PracticeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
+
+//        Uri uri = Uri.parse("tel:1234567890");
+//        Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+//        this.startActivity(intent);
     }
 
 
@@ -72,8 +82,36 @@ else {
 }
 
 
-
     }
+
+
+public void  sendMessage(View view) {
+    EditText editText = (EditText) findViewById(R.id.edit_message);
+    String addressString = editText.getText().toString();
+    Log.d(this.getClass().getName(), "Address is: " + addressString);
+
+    //prepend the protocol and more.
+   String uriString = "geo:0,0?q=" + addressString;
+
+    Log.d(this.getClass().getName(), "URI is: " + uriString);
+
+
+//Replace all spaces with Plus
+    uriString.replace(" ","+");
+
+    Uri uri = Uri.parse(uriString);
+    Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+
+    //this.startActivity(intent);
+
+    //display a map
+    uri =Uri.parse("geo:0,0?q=300+Jay+St,+Brooklyn,NY");
+    intent = new Intent(Intent.ACTION_VIEW, uri);
+
+    //Start activity
+    this.startActivity(intent);
+}
+
 @Override
     protected void onResume() {
     super.onResume();
