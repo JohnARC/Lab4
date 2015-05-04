@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +23,7 @@ public class PracticeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
-
+        this.pickPhoto();
 //        Uri uri = Uri.parse("tel:1234567890");
 //        Intent intent = new Intent(Intent.ACTION_DIAL, uri);
 //        this.startActivity(intent);
@@ -125,4 +127,38 @@ public void  sendMessage(View view) {
 
 
 }
+
+    // 5/4/15 Code
+
+
+    private enum RequestCode{
+        PICK_PHOTO_REQUEST;
+        PICK_CONTACT_REQUEST;
+    }
+
+
+private void pickContact(){
+    Intent pickContactIntent = new Intent(Intent.ACTION_PICK, Uri.parse("content://contacts"));
+    pickContactIntent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE); // Show user only contacts w/ phone numbers
+    startActivityForResult(pickContactIntent, PICK_CONTACT_REQUEST);
+}
+
+    private void pickPhoto() {
+        Intent photoIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        startActivityForResult(photoIntent, RequestCode.PICK_PHOTO_REQUEST.ordinal());
+        ContactsContract.Contacts.CONTENT_URI;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if(RequestCode == RequestCode.PICK_PHOTO_REQUEST.ordinal()){
+            Uri uri = data.getData();
+            Log.d("MyActivity", uri.toString());
+        }
+            //else if
+        }
+    }
+
 }
